@@ -28,15 +28,16 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           appBarTheme: const AppBarTheme(color: Colors.transparent),
           iconTheme: const IconThemeData(color: Colors.black),
-          scaffoldBackgroundColor: const Color.fromARGB(252, 190, 213, 208),
+          scaffoldBackgroundColor: const Color.fromARGB(251, 212, 218, 217),
           iconButtonTheme: const IconButtonThemeData(
               style: ButtonStyle(
                   iconColor:
                       MaterialStatePropertyAll(Color.fromARGB(255, 0, 0, 0)))),
           navigationBarTheme: const NavigationBarThemeData(
-              backgroundColor: Color.fromARGB(255, 116, 163, 163),
-              indicatorColor: Color.fromARGB(255, 0, 0, 0)),
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              backgroundColor: Color.fromARGB(255, 0, 0, 0),
+              indicatorColor: Color.fromARGB(255, 255, 255, 255)),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color.fromARGB(255, 153, 150, 158)),
           useMaterial3: true,
         ),
         home: const Splash());

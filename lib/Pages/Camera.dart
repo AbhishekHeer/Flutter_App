@@ -1,8 +1,9 @@
 import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart' as f_s;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:todo_app/Pages/Toast.dart';
 
 class camera extends StatefulWidget {
   const camera({super.key});
@@ -13,27 +14,17 @@ class camera extends StatefulWidget {
 
 final messege = TextEditingController();
 
+final _fs = f_s.FirebaseStorage.instance;
+final _ref = FirebaseDatabase.instance.ref('Sender');
+
 // file picker
 
 File? _image;
 
-imagepick() async {
-  final img = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-  if (img != null) {
-    _image = File(img.path);
-  }
-  await _db.doc(id).set({'id': id, 'Messege': _image!.path.toString()});
-}
+final id = DateTime.now().microsecondsSinceEpoch.toString();
 
 @override
-void initState() async {
-  await imagepick();
-}
 // db
-
-final _db = FirebaseFirestore.instance.collection('pdf');
-final id = DateTime.now().microsecondsSinceEpoch.toString();
 
 class _cameraState extends State<camera> {
   @override
@@ -51,10 +42,11 @@ class _cameraState extends State<camera> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             SizedBox(
-              height: h * 0.4,
-              width: w,
-              child: Image.file(_image!),
-            ),
+                height: h * 0.4,
+                width: w,
+                child: _image != null
+                    ? Image(image: FileImage(_image!.absolute))
+                    : const Image(image: AssetImage('assets/images/bg.jpg'))),
             SizedBox(
               height: h * 0.1,
             ),
@@ -62,14 +54,41 @@ class _cameraState extends State<camera> {
                 onPressed: () async {
                   await imagepick();
 
-                  await _db
-                      .doc(id)
-                      .set({'id': id, 'Messege': _image!.path.toString()});
+                  f_s.Reference store =
+                      f_s.FirebaseStorage.instance.ref('/images$id');
+                  f_s.UploadTask upload = store.putFile(_image!.absolute);
+
+                  await Future.value(upload).then((value) async {
+                    final url = await store.getDownloadURL();
+
+                    _ref
+                        .child(id)
+                        .set({'id': id, 'image': url.toString()}).then((value) {
+                      Messege.toast("Added Successfull");
+                    }).onError((error, stackTrace) {
+                      Messege.toast(error.toString());
+                    });
+                  }).onError((error, stackTrace) {
+                    Messege.toast(error.toString());
+                  });
                 },
                 child: const Text('Uplaod File')),
           ],
         ),
       ),
     );
+  }
+
+  //image form gallery
+
+  Future<void> imagepick() async {
+    final img = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, imageQuality: 70);
+
+    setState(() {
+      if (img != null) {
+        _image = File(img.path);
+      }
+    });
   }
 }

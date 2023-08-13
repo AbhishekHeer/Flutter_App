@@ -47,6 +47,7 @@ dependencies:
   fluttertoast: ^8.2.2
   lottie: ^2.5.0
   image_picker: ^1.0.2
+  firebase_storage: ^11.2.5
 
 dev_dependencies:
   flutter_test:
