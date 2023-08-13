@@ -33,9 +33,9 @@ class _InstaCopyState extends State<InstaCopy> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Messege_for_chat()));
+                          builder: (context) => const Messege_for_chat()));
                 },
-                icon: Icon(
+                icon: const Icon(
                   CupertinoIcons.person_2,
                   color: Colors.black,
                 )),
@@ -64,16 +64,6 @@ class _InstaCopyState extends State<InstaCopy> {
                     const Text('userName')
                   ],
                 ),
-              ),
-              child: Column(
-                children: [
-                  Image.asset(
-                    'assets/images/bg.jpg',
-                    fit: BoxFit.fitWidth,
-                    height: h * 0.35,
-                    width: w,
-                  )
-                ],
               ),
 
               // footer
@@ -138,7 +128,7 @@ class _InstaCopyState extends State<InstaCopy> {
                                               onPressed: () {
                                                 Navigator.pop(context);
                                               },
-                                              icon: Icon(
+                                              icon: const Icon(
                                                   CupertinoIcons.xmark_seal))
                                         ],
                                       )
@@ -179,8 +169,18 @@ class _InstaCopyState extends State<InstaCopy> {
                       // text
                     ],
                   ),
-                  Text('data'),
-                  Text('data'),
+                  const Text('data'),
+                  const Text('data'),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Image.asset(
+                    'assets/images/bg.jpg',
+                    fit: BoxFit.fitWidth,
+                    height: h * 0.35,
+                    width: w,
+                  )
                 ],
               ),
             );

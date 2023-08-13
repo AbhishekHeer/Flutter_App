@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lottie/lottie.dart';
 import 'package:todo_app/Pages/BottomNavi.dart';
-import 'package:todo_app/Pages/Camera.dart';
 import 'package:todo_app/files/Auth/Login.dart';
 import 'firebase_options.dart';
 
@@ -27,9 +26,9 @@ class MyApp extends StatelessWidget {
         // themeMode: ThemeMode.system,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          appBarTheme: AppBarTheme(color: Colors.transparent),
-          iconTheme: IconThemeData(color: Colors.black),
-          scaffoldBackgroundColor: Color.fromARGB(252, 190, 213, 208),
+          appBarTheme: const AppBarTheme(color: Colors.transparent),
+          iconTheme: const IconThemeData(color: Colors.black),
+          scaffoldBackgroundColor: const Color.fromARGB(252, 190, 213, 208),
           iconButtonTheme: const IconButtonThemeData(
               style: ButtonStyle(
                   iconColor:
@@ -58,7 +57,7 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 15), () {
+    Timer(const Duration(seconds: 5), () {
       if (_db.currentUser != null) {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const BottomNavi()));
@@ -69,6 +68,7 @@ class _SplashState extends State<Splash> {
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Lottie.asset('assets/Amination/splash1.json',

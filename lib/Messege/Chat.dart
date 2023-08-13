@@ -1,8 +1,5 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class chat_page extends StatefulWidget {
@@ -34,7 +31,7 @@ class _chat_pageState extends State<chat_page> {
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
-    double w = MediaQuery.of(context).size.width;
+    // double w = MediaQuery.of(context).size.width;
 
     @override
     void initState() {
@@ -44,7 +41,7 @@ class _chat_pageState extends State<chat_page> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Messege With Friend'),
+        title: const Text('Messege With Friend'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -53,22 +50,6 @@ class _chat_pageState extends State<chat_page> {
             SizedBox(
               height: h * 0.1,
             ),
-            ElevatedButton(
-                onPressed: () {
-                  getfile();
-                },
-                child: Text('Uplaod File')),
-            TextField(
-              controller: messege,
-              decoration: InputDecoration(
-                  suffix: IconButton(
-                      onPressed: () {
-                        _db.doc(id).set(
-                            {'id': id, 'Messege': messege.text.toString()});
-                      },
-                      icon: Icon(CupertinoIcons.forward)),
-                  border: OutlineInputBorder()),
-            )
           ],
         ),
       ),

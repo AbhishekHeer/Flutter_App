@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_ui_firestore/firebase_ui_firestore.dart';
 
 class ImageLoad extends StatefulWidget {
   const ImageLoad({super.key});
@@ -7,36 +9,21 @@ class ImageLoad extends StatefulWidget {
   State<ImageLoad> createState() => _ImageLoadState();
 }
 
+final _db = FirebaseFirestore.instance.collection('pdf');
+
 class _ImageLoadState extends State<ImageLoad> {
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
-    return Container(
-      height: h,
-      width: w,
-      child: Expanded(
-        child: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-          ),
-          itemCount: 18,
-          itemBuilder: (BuildContext context, int index) {
-            return SingleChildScrollView(
-              child: GridTile(
-                child: Column(
-                  children: <Widget>[
-                    Image.asset(
-                      'assets/images/bg.jpg',
-                      fit: BoxFit.contain,
-                    )
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
-      ),
-    );
+    return FirestoreListView(
+        query: _db,
+        itemBuilder: ((context, doc) {
+          return Expanded(
+            child: GridTile(
+              child: Image.network(doc.id.toString()),
+            ),
+          );
+        }));
   }
 }
