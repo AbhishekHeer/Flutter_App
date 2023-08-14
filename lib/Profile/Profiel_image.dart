@@ -1,5 +1,4 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
 class ImageLoad extends StatefulWidget {
@@ -19,22 +18,37 @@ class _ImageLoadState extends State<ImageLoad> {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return SizedBox(
-      height: h,
-      width: w,
-      child: Expanded(
-        child: FirebaseAnimatedList(
-            query: list,
-            itemBuilder: ((context, snapshot, animation, index) {
-              return GridTile(
-                child: Image(
-                  image: NetworkImage(snapshot.child('image').value.toString()),
-                  fit: BoxFit.fill,
-                  height: h * 0.09,
-                  width: w * 0.09,
-                ),
-              );
-            })),
-      ),
-    );
+        height: h,
+        width: w,
+        child: Expanded(
+          child: StreamBuilder(
+              stream: list.onValue,
+              builder: ((context, snapshot) {
+                return GridView.builder(
+                    itemCount: snapshot.data!.snapshot.children.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3),
+                    itemBuilder: ((context, index) {
+                      return GridTile(
+                          child: Column(
+                        children: [
+                          Image(
+                            image: NetworkImage(snapshot.data!.snapshot
+                                .child('image')
+                                .value
+                                .toString()),
+                            fit: BoxFit.fill,
+                            height: h * 0.6,
+                            width: w * 0.09,
+                          ),
+                          SizedBox(
+                            width: w * 0.03,
+                          )
+                        ],
+                      ));
+                    }));
+              })),
+        ));
   }
 }
