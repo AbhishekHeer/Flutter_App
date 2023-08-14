@@ -1,5 +1,4 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/Messege/Messege.dart';
@@ -52,149 +51,137 @@ class _InstaCopyState extends State<InstaCopy> {
               crossAxisCount: 1),
           itemBuilder: (context, index) {
             return GridTile(
-                header: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: w * 0.02, vertical: h * 0.02),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.blueAccent,
-                      ),
-                      SizedBox(
-                        width: w * 0.02,
-                      ),
-                      const Text('userName')
-                    ],
-                  ),
-                ),
-
-                // footer
-                footer: Column(
+              header: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: w * 0.02, vertical: h * 0.02),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                click = true;
-                              });
+                    const CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Colors.blueAccent,
+                    ),
+                    SizedBox(
+                      width: w * 0.02,
+                    ),
+                    const Text('userName')
+                  ],
+                ),
+              ),
 
-                              Messege.Snack("Thanks For Like");
-                            },
-                            icon: click
-                                ? const Icon(
-                                    CupertinoIcons.heart_fill,
-                                    color: Colors.black,
-                                  )
-                                : const Icon(
-                                    CupertinoIcons.heart,
-                                    color: Colors.black,
-                                  ),
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            showModalBottomSheet(
-                                isDismissible: false,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(w * 0.2),
-                                ),
-                                backgroundColor: Colors.black,
-                                context: context,
-                                builder: (context) {
-                                  return Container(
-                                    decoration: const BoxDecoration(
-                                        color: Colors.white),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: EdgeInsets.all(w * 0.02),
-                                              child: Text(
-                                                'Comments',
-                                                style: TextStyle(
-                                                  fontSize: h * 0.02,
-                                                  fontWeight: FontWeight.w800,
-                                                ),
-                                              ),
-                                            ),
-                                            IconButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                icon: const Icon(
-                                                    CupertinoIcons.xmark_seal)),
-                                            const TextField()
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                });
-                          },
-                          icon: const Icon(
-                            CupertinoIcons.chat_bubble,
-                            color: Colors.black,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            CupertinoIcons.chevron_forward,
-                            color: Colors.black,
-                          ),
-                        ),
-                        IconButton(
+              // footer
+              footer: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: IconButton(
                           onPressed: () {
                             setState(() {
-                              bclick = true;
+                              click = true;
                             });
+
+                            Messege.Snack("Thanks For Like");
                           },
-                          icon: bclick
+                          icon: click
                               ? const Icon(
-                                  CupertinoIcons.bookmark_fill,
+                                  CupertinoIcons.heart_fill,
                                   color: Colors.black,
                                 )
                               : const Icon(
-                                  CupertinoIcons.bookmark,
+                                  CupertinoIcons.heart,
                                   color: Colors.black,
                                 ),
                         ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                              isDismissible: false,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(w * 0.2),
+                              ),
+                              backgroundColor: Colors.black,
+                              context: context,
+                              builder: (context) {
+                                return Container(
+                                  decoration:
+                                      const BoxDecoration(color: Colors.white),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: EdgeInsets.all(w * 0.02),
+                                            child: Text(
+                                              'Comments',
+                                              style: TextStyle(
+                                                fontSize: h * 0.02,
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                            ),
+                                          ),
+                                          IconButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              icon: const Icon(
+                                                  CupertinoIcons.xmark_seal)),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                );
+                              });
+                        },
+                        icon: const Icon(
+                          CupertinoIcons.chat_bubble,
+                          color: Colors.black,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          CupertinoIcons.chevron_forward,
+                          color: Colors.black,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            bclick = true;
+                          });
+                        },
+                        icon: bclick
+                            ? const Icon(
+                                CupertinoIcons.bookmark_fill,
+                                color: Colors.black,
+                              )
+                            : const Icon(
+                                CupertinoIcons.bookmark,
+                                color: Colors.black,
+                              ),
+                      ),
 
-                        // text
-                      ],
-                    ),
-                    const Text('data'),
-                    const Text('data'),
-                  ],
-                ),
-                child: Expanded(
-                  child: FirebaseAnimatedList(
-                      query: list,
-                      itemBuilder: (context, snapshot, animation, index) {
-                        return Column(
-                          children: [
-                            Image(
-                              image: NetworkImage(
-                                  snapshot.child('image').value.toString()),
-                              fit: BoxFit.fitWidth,
-                              height: h * 0.35,
-                              width: w,
-                            )
-                          ],
-                        );
-                      }),
-                ));
+                      // text
+                    ],
+                  ),
+                  const Text('data'),
+                  const Text('data'),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Image(image: NetworkImage(list.child('image').toString()))
+                ],
+              ),
+            );
           }),
     );
   }

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart' as f_s;
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:todo_app/Pages/Toast.dart';
 
@@ -16,6 +17,34 @@ final messege = TextEditingController();
 
 final _fs = f_s.FirebaseStorage.instance;
 final _ref = FirebaseDatabase.instance.ref('Sender');
+
+//cropper
+
+Future<CroppedFile?> _crop() async {
+  var cropimage = await ImageCropper().cropImage(
+    sourcePath: _image!.path,
+    aspectRatioPresets: Platform.isAndroid
+        ? [
+            CropAspectRatioPreset.square,
+            CropAspectRatioPreset.ratio3x2,
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.ratio4x3,
+            CropAspectRatioPreset.ratio16x9
+          ]
+        : [
+            CropAspectRatioPreset.original,
+            CropAspectRatioPreset.square,
+            CropAspectRatioPreset.ratio3x2,
+            CropAspectRatioPreset.ratio4x3,
+            CropAspectRatioPreset.ratio5x3,
+            CropAspectRatioPreset.ratio5x4,
+            CropAspectRatioPreset.ratio7x5,
+            CropAspectRatioPreset.ratio16x9
+          ],
+  );
+
+  return cropimage;
+}
 
 // file picker
 
@@ -45,7 +74,7 @@ class _cameraState extends State<camera> {
                 height: h * 0.4,
                 width: w,
                 child: _image != null
-                    ? Image(image: FileImage(_image!.absolute))
+                    ? Image(image: FileImage(_image!))
                     : const Image(image: AssetImage('assets/images/bg.jpg'))),
             SizedBox(
               height: h * 0.1,

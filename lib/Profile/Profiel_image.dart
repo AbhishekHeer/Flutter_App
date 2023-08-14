@@ -25,8 +25,8 @@ class _ImageLoadState extends State<ImageLoad> {
         child: FirebaseAnimatedList(
             query: list,
             itemBuilder: ((context, snapshot, animation, index) {
-              return ListTile(
-                title: Image(
+              return GridTile(
+                child: Image(
                   image: NetworkImage(snapshot.child('image').value.toString()),
                   fit: BoxFit.fill,
                   height: h * 0.09,
@@ -38,9 +38,3 @@ class _ImageLoadState extends State<ImageLoad> {
     );
   }
 }
-  // FirebaseAnimatedList(
-  //           query: list,
-  //           itemBuilder: ((context, snapshot, animation, index) {
-  //             return Center(
-  //               child:
-  //           })),
