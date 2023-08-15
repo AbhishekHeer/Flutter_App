@@ -23,7 +23,10 @@ class _ImageLoadState extends State<ImageLoad> {
         child: Expanded(
           child: StreamBuilder(
               stream: list.onValue,
-              builder: ((context, snapshot) {
+              builder: ((context, AsyncSnapshot<DatabaseEvent> snapshot) {
+                if (snapshot.connectionState == ConnectionState.none) {
+                  return const Text('Nothing Is Here');
+                }
                 return GridView.builder(
                     itemCount: snapshot.data!.snapshot.children.length,
                     gridDelegate:
@@ -33,18 +36,31 @@ class _ImageLoadState extends State<ImageLoad> {
                       return GridTile(
                           child: Column(
                         children: [
-                          Image(
-                            image: NetworkImage(snapshot.data!.snapshot
-                                .child('image')
-                                .value
-                                .toString()),
-                            fit: BoxFit.fill,
-                            height: h * 0.6,
-                            width: w * 0.09,
+                          InkWell(
+                            onHover: (value) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Dialog(
+                                      child: Image(
+                                          image: NetworkImage(snapshot
+                                              .data!.snapshot
+                                              .child('image')
+                                              .toString())),
+                                    );
+                                  });
+                            },
+                            child: Image(
+                              image: NetworkImage(snapshot.data!.snapshot
+                                  .child('image')
+                                  .value
+                                  .toString()),
+                              filterQuality: FilterQuality.medium,
+                              fit: BoxFit.fitHeight,
+                              height: h * 0.9,
+                              width: w * 0.09,
+                            ),
                           ),
-                          SizedBox(
-                            width: w * 0.03,
-                          )
                         ],
                       ));
                     }));

@@ -84,7 +84,7 @@ class _cameraState extends State<camera> {
                   await imagepick();
 
                   f_s.Reference store =
-                      f_s.FirebaseStorage.instance.ref('/images$id');
+                      f_s.FirebaseStorage.instance.ref('/images/$id');
                   f_s.UploadTask upload = store.putFile(_image!.absolute);
 
                   await Future.value(upload).then((value) async {
