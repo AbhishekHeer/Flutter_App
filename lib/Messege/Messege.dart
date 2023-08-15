@@ -39,7 +39,7 @@ class _Messege_for_chatState extends State<Messege_for_chat> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: h * 0.1,
               width: w,
               child: SingleChildScrollView(
@@ -48,14 +48,14 @@ class _Messege_for_chatState extends State<Messege_for_chat> {
                     children: [
                       Image(
                           image: img == null
-                              ? AssetImage('assets/images/bg.jpg')
+                              ? const AssetImage('assets/images/bg.jpg')
                               : AssetImage(img.toString()))
                     ],
                   ),
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               height: h,
               width: w,
               child: ListView.builder(
@@ -63,8 +63,10 @@ class _Messege_for_chatState extends State<Messege_for_chat> {
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (Context) => chat_page()));
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (Context) => const chat_page()));
                     },
                     title: Padding(
                       padding: EdgeInsets.symmetric(horizontal: w * 0.02),
@@ -87,6 +89,21 @@ class _Messege_for_chatState extends State<Messege_for_chat> {
               ),
             ),
           ],
+        ),
+      ),
+      bottomSheet: Container(
+        height: h * 0.1,
+        width: w,
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerLeft,
+                colors: [Colors.grey, Colors.white10])),
+        child: TextField(
+          decoration: InputDecoration(
+              hintText: 'Messege',
+              suffix:
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.send))),
         ),
       ),
     );

@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/Pages/Camera.dart';
 import 'package:todo_app/Pages/Instagram.dart';
-import 'package:todo_app/Pages/Notes.dart';
 import 'package:todo_app/Pages/Posts.dart';
+import 'package:todo_app/Pages/Videos.dart';
 import 'package:todo_app/Profile/Profile.dart';
 
 class BottomNavi extends StatefulWidget {
@@ -18,8 +18,8 @@ int current = 0;
 List page = [
   const InstaCopy(),
   const Post(),
-  const camera(),
-  const Notes(),
+  const Camera(),
+  const VideoScreen(),
   const Profile()
 ];
 
@@ -29,10 +29,10 @@ class _BottomNaviState extends State<BottomNavi> {
     return Scaffold(
       body: page[current],
       bottomNavigationBar: NavigationBar(
-        indicatorColor: Color.fromARGB(255, 145, 110, 211),
+        indicatorColor: const Color.fromARGB(255, 197, 176, 236),
         animationDuration: const Duration(seconds: 1),
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-        backgroundColor: Color.fromARGB(61, 114, 216, 133),
+        backgroundColor: Colors.transparent,
         height: MediaQuery.of(context).size.height * 0.1,
         destinations: const [
           NavigationDestination(

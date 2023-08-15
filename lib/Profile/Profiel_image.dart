@@ -57,8 +57,6 @@ class _ImageLoadState extends State<ImageLoad> {
                                   .toString()),
                               filterQuality: FilterQuality.medium,
                               fit: BoxFit.fitHeight,
-                              height: h * 0.9,
-                              width: w * 0.09,
                             ),
                           ),
                         ],

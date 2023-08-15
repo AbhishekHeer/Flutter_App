@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:todo_app/Pages/BottomNavi.dart';
 import 'package:todo_app/files/Auth/Login.dart';
-
-import '../../Pages/Notes.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -71,12 +70,12 @@ class _SignUpState extends State<SignUp> {
               ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size.square(50),
+                    minimumSize: const Size.square(50),
                   ),
                   onPressed: () {
                     createUser();
                   },
-                  child: Text('Sign-Up')),
+                  child: const Text('Sign-Up')),
               SizedBox(
                 height: h * 0.05,
               ),
@@ -111,7 +110,7 @@ class _SignUpState extends State<SignUp> {
             email: _email.text.toString(), password: _pass.text.toString())
         .then((value) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Notes()));
+          context, MaterialPageRoute(builder: (context) => const BottomNavi()));
     }).onError((error, stackTrace) {
       Fluttertoast.showToast(
           msg: error.toString(),
