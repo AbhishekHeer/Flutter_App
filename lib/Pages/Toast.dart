@@ -19,7 +19,11 @@ class Messege {
       backgroundColor: const Color.fromARGB(255, 0, 0, 0),
       elevation: 10,
       behavior: SnackBarBehavior.floating,
-      margin: EdgeInsets.all(5),
+      margin: const EdgeInsets.all(5),
     );
+  }
+
+  static Textmessege(String text, size) {
+    Text(text, style: TextStyle(fontSize: size, fontWeight: FontWeight.bold));
   }
 }

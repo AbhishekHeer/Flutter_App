@@ -1,8 +1,8 @@
+import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/Messege/Messege.dart';
-import 'package:todo_app/Pages/Toast.dart';
 
 class InstaCopy extends StatefulWidget {
   const InstaCopy({super.key});
@@ -14,9 +14,9 @@ class InstaCopy extends StatefulWidget {
 bool click = false;
 bool bclick = false;
 
-final list = FirebaseDatabase.instance.ref('Sender');
+Uint8List? imagebytes;
 
-//htttp
+final list = FirebaseDatabase.instance.ref('Sender');
 
 class InstaCopyState extends State<InstaCopy> {
   @override
@@ -54,9 +54,6 @@ class InstaCopyState extends State<InstaCopy> {
           child: StreamBuilder(
               stream: list.onValue,
               builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
-                String image =
-                    snapshot.data!.snapshot.child('image').value.toString();
-
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
                     child: Text('wait Data Is Loading'),
@@ -68,153 +65,25 @@ class InstaCopyState extends State<InstaCopy> {
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 1),
                     itemBuilder: (context, index) {
-                      return GridTile(
-                        header: Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: w * 0.02, vertical: h * 0.02),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const CircleAvatar(
-                                radius: 20,
-                                backgroundColor: Colors.blueAccent,
-                              ),
-                              SizedBox(
-                                width: w * 0.02,
-                              ),
-                              const Text('userName')
-                            ],
-                          ),
-                        ),
+                      final fetchimage = snapshot.data!.snapshot
+                          .child('image')
+                          .value
+                          .toString();
 
-                        // footer
-                        footer: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 20),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        click = true;
-                                      });
-
-                                      Messege.Snack("Thanks For Like");
-                                    },
-                                    icon: click
-                                        ? const Icon(
-                                            CupertinoIcons.heart_fill,
-                                            color: Colors.black,
-                                          )
-                                        : const Icon(
-                                            CupertinoIcons.heart,
-                                            color: Colors.black,
-                                          ),
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    showModalBottomSheet(
-                                        isDismissible: false,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(w * 0.2),
-                                        ),
-                                        backgroundColor: Colors.black,
-                                        context: context,
-                                        builder: (context) {
-                                          return Container(
-                                            decoration: const BoxDecoration(
-                                                color: Colors.white),
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: <Widget>[
-                                                    Padding(
-                                                      padding: EdgeInsets.all(
-                                                          w * 0.02),
-                                                      child: Text(
-                                                        'Comments',
-                                                        style: TextStyle(
-                                                          fontSize: h * 0.02,
-                                                          fontWeight:
-                                                              FontWeight.w800,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    IconButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                        icon: const Icon(
-                                                            CupertinoIcons
-                                                                .xmark_seal)),
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          );
-                                        });
-                                  },
-                                  icon: const Icon(
-                                    CupertinoIcons.chat_bubble,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    CupertinoIcons.chevron_forward,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      bclick = true;
-                                    });
-                                  },
-                                  icon: bclick
-                                      ? const Icon(
-                                          CupertinoIcons.bookmark_fill,
-                                          color: Colors.black,
-                                        )
-                                      : const Icon(
-                                          CupertinoIcons.bookmark,
-                                          color: Colors.black,
-                                        ),
-                                ),
-
-                                // text
-                              ],
-                            ),
-                            Text(snapshot.data!.snapshot
-                                .child('id')
-                                .value
-                                .toString()),
-                          ],
-                        ),
-
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image(
-                            image: NetworkImage(image),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                      return Column(
+                        children: [
+                          Image(image: NetworkImage(fetchimage[index]))
+                        ],
                       );
                     });
               }),
         ),
       ),
     );
+  }
+
+  imagefile(String path) async {
+    var image = await rootBundle.load(path);
+    return image;
   }
 }
