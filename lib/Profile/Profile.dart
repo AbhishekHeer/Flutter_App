@@ -1,10 +1,11 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/Profile/Analysis.dart';
-import 'package:todo_app/Profile/Tages.dart';
+import 'package:todo_app/Profile/Profiel_image.dart';
+import 'package:todo_app/files/Auth/Login.dart';
 
-import 'Profiel_image.dart';
-import '../files/Auth/Login.dart';
+import 'Follow.dart';
+import 'Project_Add.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -12,10 +13,12 @@ class Profile extends StatefulWidget {
   @override
   State<Profile> createState() => _ProfileState();
 }
+// bottomnavi
 
-int _index = 0;
-
-List<Widget> _pages = [const ImageLoad(), const Analysis(), const Tag_page()];
+int index = 0;
+List Pages = [const ImageLoad(), const Follow(), const Project_Add()];
+//db
+final _db = FirebaseDatabase.instance.ref('Sender');
 
 class _ProfileState extends State<Profile> {
   @override
@@ -25,18 +28,17 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
-        centerTitle: true,
+        centerTitle: false,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 20),
+            padding: EdgeInsets.only(right: w * 0.03),
             child: IconButton(
-                onPressed: () async {
+                onPressed: () {
                   showDialog(
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: const Text('Are You Sure'),
-                          content: const Text('Logout ?'),
+                          title: const Text('Logout'),
                           actions: [
                             ElevatedButton(
                                 onPressed: () {
@@ -48,158 +50,55 @@ class _ProfileState extends State<Profile> {
                                   Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const LoginScreen()));
+                                          builder: ((context) =>
+                                              const LoginScreen())));
                                 },
                                 child: const Text('Yes')),
                           ],
                         );
                       });
                 },
-                icon: const Icon(CupertinoIcons.person_badge_minus_fill)),
-          ),
+                icon: const Icon(CupertinoIcons.profile_circled)),
+          )
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
-            SizedBox(
-              height: h * 0.05,
-              width: w,
-            ),
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: w * 0.04),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                      height: h * 0.2,
-                      width: w * 0.9,
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                            begin: Alignment.bottomLeft,
-                            end: Alignment.topRight,
-                            colors: [Colors.black, Colors.blueAccent]),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                              width: w * 0.3,
-                              padding: const EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100)),
-                              child: CircleAvatar(
-                                backgroundColor: Colors.brown,
-                                radius: h * 0.1,
-                                backgroundImage: const AssetImage(
-                                  'assets/images/bg.jpg',
-                                ),
-                              )),
-                          Container(
-                            width: w * 0.6,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text(
-                                        'Follower',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w900),
-                                      ),
-                                      Text(
-                                        'following',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w900),
-                                      ),
-                                      InkWell(
-                                        child: Text(
-                                          'Post',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w900),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Text(
-                                        '81',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: h * 0.02,
-                                            fontWeight: FontWeight.w900),
-                                      ),
-                                      SizedBox(
-                                        width: w * 0.03,
-                                      ),
-                                      Text(
-                                        '2',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: h * 0.02,
-                                            fontWeight: FontWeight.w900),
-                                      ),
-                                      SizedBox(
-                                        width: w * 0.03,
-                                      ),
-                                      InkWell(
-                                        child: Text(
-                                          '31',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: h * 0.02,
-                                              fontWeight: FontWeight.w900),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ]),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+          children: <Widget>[
+            SizedBox(height: h * 0.05),
+            Center(
+              child: CircleAvatar(
+                  radius: w * 0.2,
+                  backgroundImage: const AssetImage('assets/images/bg.jpg')),
             ),
             SizedBox(
-              height: h * 0.02,
+              height: h * 0.04,
+              child: const Divider(
+                color: Colors.black,
+              ),
             ),
             NavigationBar(
                 animationDuration: const Duration(seconds: 1),
-                selectedIndex: _index,
+                selectedIndex: index,
                 onDestinationSelected: (value) {
                   setState(() {
-                    _index = value;
+                    index = value;
                   });
                 },
-                backgroundColor: Colors.transparent,
-                height: h * 0.07,
                 labelBehavior:
                     NavigationDestinationLabelBehavior.onlyShowSelected,
+                backgroundColor: Colors.transparent,
                 destinations: const [
                   NavigationDestination(
                       icon: Icon(CupertinoIcons.circle_grid_hex),
-                      label: 'Pics'),
+                      label: 'Post'),
                   NavigationDestination(
-                      icon: Icon(CupertinoIcons.chart_bar_square),
-                      label: 'Pics'),
+                      icon: Icon(CupertinoIcons.person_2_fill),
+                      label: 'Folower'),
                   NavigationDestination(
-                      icon: Icon(CupertinoIcons
-                          .person_crop_circle_fill_badge_checkmark),
-                      label: 'Pics'),
+                      icon: Icon(CupertinoIcons.add), label: 'Add Project'),
                 ]),
-            _pages[_index],
+            Pages[index]
           ],
         ),
       ),

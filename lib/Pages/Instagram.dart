@@ -72,7 +72,7 @@ class InstaCopyState extends State<InstaCopy> {
 
                       return Column(
                         children: [
-                          Image(image: NetworkImage(fetchimage[index]))
+                          Image(image: NetworkImage(fetchimage.toString()))
                         ],
                       );
                     });
@@ -80,10 +80,5 @@ class InstaCopyState extends State<InstaCopy> {
         ),
       ),
     );
-  }
-
-  imagefile(String path) async {
-    var image = await rootBundle.load(path);
-    return image;
   }
 }
