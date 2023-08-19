@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,7 +15,9 @@ class CameraPost extends StatefulWidget {
   State<CameraPost> createState() => _PostScreenState();
 }
 
-final _db = FirebaseDatabase.instance.ref('Sender');
+final Storage = FirebaseStorage.instance;
+
+final _db = FirebaseDatabase.instance.ref('Images');
 final caption = TextEditingController();
 final id = DateTime.now().microsecondsSinceEpoch.toString();
 
@@ -136,10 +139,14 @@ class _PostScreenState extends State<CameraPost> {
                       minimumSize:
                           MaterialStatePropertyAll(Size.square(h * 0.07))),
                   onPressed: () async {
+                    var path = Storage.ref()
+                        .child('/images/$id')
+                        .putFile(_camera!.absolute);
+                    var download = await path.snapshot.ref.getDownloadURL();
                     _db.child(id).set({
                       'id': id,
                       'caption': caption.text.toString(),
-                      'image': _camera!.path.toString()
+                      'image': download.toString()
                     }).then((value) {
                       Messege.toast('added Successfully');
                       Navigator.pushReplacement(

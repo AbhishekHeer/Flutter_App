@@ -15,7 +15,7 @@ class GalleryPost extends StatefulWidget {
   State<GalleryPost> createState() => _PostScreenState();
 }
 
-final _db = FirebaseDatabase.instance;
+final _db = FirebaseDatabase.instance.ref('Images');
 final Storage = FirebaseStorage.instance;
 final caption = TextEditingController();
 final id = DateTime.now().microsecondsSinceEpoch.toString();
@@ -144,7 +144,7 @@ class _PostScreenState extends State<GalleryPost> {
                         .putFile(_gallery!.absolute);
                     var download = await path.snapshot.ref.getDownloadURL();
 
-                    _db.ref('Sender').child(id).set({
+                    _db.child(id).set({
                       'id': id,
                       'caption': caption.text.toString(),
                       'image': download.toString()

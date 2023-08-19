@@ -8,7 +8,7 @@ class ImageLoad extends StatefulWidget {
   State<ImageLoad> createState() => _ImageLoadState();
 }
 
-final list = FirebaseDatabase.instance.ref('Sender');
+final list = FirebaseDatabase.instance.ref('Images');
 
 // loading image
 
@@ -33,29 +33,32 @@ class _ImageLoadState extends State<ImageLoad> {
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3),
                     itemBuilder: ((context, index) {
+                      Map<dynamic, dynamic> map =
+                          snapshot.data!.snapshot.value as dynamic;
+                      List<dynamic> liist = [];
+                      liist.clear();
+                      liist = map.values.toList();
                       return GridTile(
                           child: Column(
                         children: [
                           InkWell(
                             onHover: (value) {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return Dialog(
-                                      child: Image(
-                                          image: NetworkImage(snapshot
-                                              .data!.snapshot
-                                              .child('image')
-                                              .toString())),
-                                    );
-                                  });
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.circular(h * 0.01),
+                                    gradient: const LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        colors: [
+                                          Colors.black87,
+                                          Colors.white70,
+                                        ])),
+                              );
                             },
                             child: Image(
-                              image: NetworkImage(snapshot.data!.snapshot
-                                  .child('image')
-                                  .value
-                                  .toString()),
-                              filterQuality: FilterQuality.medium,
+                              image: NetworkImage(liist[index]['image']),
+                              // filterQuality: FilterQuality.medium,
                               fit: BoxFit.fitHeight,
                             ),
                           ),

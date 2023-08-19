@@ -68,8 +68,22 @@ class _ProfileState extends State<Profile> {
             SizedBox(height: h * 0.05),
             Center(
               child: CircleAvatar(
-                  radius: w * 0.2,
+                  radius: w * 0.15,
                   backgroundImage: const AssetImage('assets/images/bg.jpg')),
+            ),
+            SizedBox(
+              height: h * 0.03,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: h * 0.01),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'UserName',
+                  style: TextStyle(
+                      fontSize: h * 0.02, fontWeight: FontWeight.bold),
+                ),
+              ),
             ),
             SizedBox(
               height: h * 0.04,
