@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:todo_app/Messege/Messege.dart';
 
 class InstaCopy extends StatefulWidget {
@@ -13,8 +14,6 @@ class InstaCopy extends StatefulWidget {
 
 bool click = false;
 bool bclick = false;
-
-Uint8List? imagebytes;
 
 final list = FirebaseDatabase.instance.ref('Images');
 
@@ -55,9 +54,8 @@ class InstaCopyState extends State<InstaCopy> {
               stream: list.onValue,
               builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: Text('wait Data Is Loading'),
-                  );
+                  return Center(
+                      child: Lottie.asset('assets/Amination/Loading.json'));
                 }
                 return GridView.builder(
                     itemCount: snapshot.data!.snapshot.children.length,
