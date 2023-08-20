@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:todo_app/Postscreen/Gallery.dart';
 import 'package:todo_app/Postscreen/Post.dart';
+import 'package:todo_app/Postscreen/Videopost.dart';
 
 class Camera extends StatefulWidget {
   const Camera({super.key});
@@ -24,7 +25,7 @@ class _CameraState extends State<Camera> {
               ClipPath(
                 clipper: ImagebackClipper(),
                 child: Container(
-                  height: h * 0.45,
+                  height: h * 0.5,
                   width: w,
                   color: const Color.fromARGB(255, 167, 126, 214),
                   child: Center(
@@ -75,17 +76,31 @@ class _CameraState extends State<Camera> {
                                         size: h * 0.05,
                                       )),
                                   IconButton(
-                                      onPressed: () {
-                                        Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: ((context) =>
-                                                    const GalleryPost())));
-                                      },
-                                      icon: Icon(
-                                        CupertinoIcons.doc_chart,
-                                        size: h * 0.04,
-                                      )),
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  const GalleryPost())));
+                                    },
+                                    icon: Icon(
+                                      CupertinoIcons.doc_chart,
+                                      size: h * 0.04,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  const VideoPost())));
+                                    },
+                                    icon: Icon(
+                                      CupertinoIcons.video_camera_solid,
+                                      size: h * 0.04,
+                                    ),
+                                  ),
                                 ],
                               ),
                               actions: [
@@ -109,7 +124,7 @@ class _CameraState extends State<Camera> {
             ],
           ),
           SizedBox(
-            height: h * 0.27,
+            height: h * 0.2,
           ),
           Text(
             'Upload Your File',
@@ -119,13 +134,13 @@ class _CameraState extends State<Camera> {
                 fontWeight: FontWeight.bold),
           ),
           SizedBox(
-            height: h * 0.07,
+            height: h * 0.04,
           ),
           Text(
             'Browse The File You Want To Upload',
             style: TextStyle(
                 foreground: Paint(),
-                fontSize: h * 0.03,
+                fontSize: h * 0.02,
                 fontWeight: FontWeight.bold),
           ),
         ],
