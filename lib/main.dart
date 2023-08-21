@@ -5,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lottie/lottie.dart';
 import 'package:todo_app/Pages/BottomNavi.dart';
-import 'package:todo_app/Pages/Camera.dart';
 import 'package:todo_app/Postscreen/Videopost.dart';
-import 'package:todo_app/Profile/Profile.dart';
 import 'package:todo_app/files/Auth/Login.dart';
 import 'firebase_options.dart';
 
@@ -42,7 +40,7 @@ class MyApp extends StatelessWidget {
               seedColor: const Color.fromARGB(255, 153, 150, 158)),
           useMaterial3: true,
         ),
-        home: const Splash());
+        home: const VideoPost());
   }
 }
 
@@ -56,7 +54,6 @@ class Splash extends StatefulWidget {
 final _db = FirebaseAuth.instance;
 
 class _SplashState extends State<Splash> {
-  @override
   @override
   void initState() {
     super.initState();
