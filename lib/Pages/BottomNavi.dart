@@ -16,7 +16,7 @@ class BottomNavi extends StatefulWidget {
 int current = 0;
 
 List page = [
-  const InstaCopy(),
+  const Grido(),
   const Post(),
   const Camera(),
   const VideoScreen(),

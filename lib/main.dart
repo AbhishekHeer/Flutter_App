@@ -4,8 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/Pages/BottomNavi.dart';
-import 'package:todo_app/Postscreen/Videopost.dart';
+import 'package:todo_app/Provider/Like.dart';
 import 'package:todo_app/files/Auth/Login.dart';
 import 'firebase_options.dart';
 
@@ -23,24 +24,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        // themeMode: ThemeMode.system,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          appBarTheme: const AppBarTheme(color: Colors.transparent),
-          iconTheme: const IconThemeData(color: Color.fromARGB(255, 0, 0, 0)),
-          scaffoldBackgroundColor: const Color.fromARGB(251, 212, 218, 217),
-          iconButtonTheme: const IconButtonThemeData(
-              style: ButtonStyle(
-                  iconColor:
-                      MaterialStatePropertyAll(Color.fromARGB(255, 0, 0, 0)))),
-          navigationBarTheme: const NavigationBarThemeData(
-              backgroundColor: Color.fromARGB(255, 0, 0, 0),
-              indicatorColor: Color.fromARGB(255, 255, 255, 255)),
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: const Color.fromARGB(255, 153, 150, 158)),
-          useMaterial3: true,
-        ),
-        home: const VideoPost());
+      // themeMode: ThemeMode.system,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(color: Colors.transparent),
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 0, 0, 0)),
+        scaffoldBackgroundColor: const Color.fromARGB(251, 212, 218, 217),
+        iconButtonTheme: const IconButtonThemeData(
+            style: ButtonStyle(
+                iconColor:
+                    MaterialStatePropertyAll(Color.fromARGB(255, 0, 0, 0)))),
+        navigationBarTheme: const NavigationBarThemeData(
+            backgroundColor: Color.fromARGB(255, 0, 0, 0),
+            indicatorColor: Color.fromARGB(255, 255, 255, 255)),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromARGB(255, 153, 150, 158)),
+        useMaterial3: true,
+      ),
+      home: Provider(create: (_) => Like(), child: const BottomNavi()),
+    );
   }
 }
 

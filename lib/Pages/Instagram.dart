@@ -1,23 +1,25 @@
-import 'package:flutter/services.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/Messege/Messege.dart';
+import 'package:todo_app/Provider/Like.dart';
 
-class InstaCopy extends StatefulWidget {
-  const InstaCopy({super.key});
+class Grido extends StatefulWidget {
+  const Grido({super.key});
 
   @override
-  State<InstaCopy> createState() => InstaCopyState();
+  State<Grido> createState() => GridoState();
 }
 
+List<int> Indexx = [];
 bool click = false;
 bool bclick = false;
 
 final list = FirebaseDatabase.instance.ref('Images');
 
-class InstaCopyState extends State<InstaCopy> {
+class GridoState extends State<Grido> {
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -87,12 +89,11 @@ class InstaCopyState extends State<InstaCopy> {
                                         Color.fromARGB(96, 198, 211, 178),
                                       ])),
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(h * 0.02),
                                 child: Image(
                                   image: NetworkImage(liist[index]['image']),
                                   fit: BoxFit.cover,
                                   height: h * 0.4,
-                                  width: w * 0.88,
+                                  width: w,
                                 ),
                               ),
                             ),
@@ -104,9 +105,16 @@ class InstaCopyState extends State<InstaCopy> {
                               children: <Widget>[
                                 Row(
                                   children: [
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(CupertinoIcons.heart)),
+                                    Consumer<Like>(
+                                        builder: ((context, value, child) {
+                                      return IconButton(
+                                          onPressed: () {
+                                            value.setlike(index);
+                                          },
+                                          icon: Icon(value.Idexx.contains(index)
+                                              ? CupertinoIcons.snow
+                                              : CupertinoIcons.heart));
+                                    })),
                                     IconButton(
                                         onPressed: () {},
                                         icon: const Icon(CupertinoIcons
