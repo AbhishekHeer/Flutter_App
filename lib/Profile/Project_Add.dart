@@ -35,21 +35,22 @@ class _Project_AddState extends State<Project_Add> {
                     child: CircularProgressIndicator(),
                   );
                 } else {
-                  Map<dynamic, dynamic> map =
-                      snapshot.data!.snapshot.value as dynamic;
-                  List<dynamic> items = [];
-                  items.clear();
-                  items = map.values.toList();
                   return ListView.builder(
                       itemCount: snapshot.data!.snapshot.children.length,
                       itemBuilder: (context, index) {
+                        Map<dynamic, dynamic> map =
+                            snapshot.data!.snapshot.value as dynamic;
+                        List<dynamic> items = [];
+                        items.clear();
+                        items = map.values.toList();
                         return ListTile(
-                          title: Text(items[index]),
+                          title: Text(items[index]['Porject-Name']),
                           trailing: PopupMenuButton(
                               itemBuilder: (context) => [
                                     PopupMenuItem(
                                       child: ListTile(
                                         onTap: () {
+                                          Navigator.pop(context);
                                           showDialog(
                                               context: context,
                                               builder: (context) {
@@ -145,19 +146,14 @@ class _Project_AddState extends State<Project_Add> {
                                     PopupMenuItem(
                                       child: ListTile(
                                         onTap: () {
+                                          Navigator.pop(context);
                                           setState(() {
-                                            _db.remove();
+                                            items.remove(index);
                                           });
                                         },
                                         title: const Text('Delete'),
                                         leading:
                                             const Icon(CupertinoIcons.delete),
-                                      ),
-                                    ),
-                                    const PopupMenuItem(
-                                      child: ListTile(
-                                        title: Text('data'),
-                                        leading: Icon(CupertinoIcons.delete),
                                       ),
                                     ),
                                   ]),

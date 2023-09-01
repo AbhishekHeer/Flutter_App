@@ -43,28 +43,33 @@ class _ImageLoadState extends State<ImageLoad> {
                         List<dynamic> liist = [];
                         liist.clear();
                         liist = map.values.toList();
-                        return GridTile(
-                            child: Column(
-                          children: [
-                            SizedBox(
-                              height: h * 0.02,
-                            ),
-                            InkWell(
-                              child: SizedBox(
-                                height: h * 0.2,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(30),
-                                  child: Image(
-                                    image: NetworkImage(liist[index]['image']),
-                                    fit: BoxFit.cover,
-                                    height: h * 0.4,
-                                    width: w * 0.88,
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: h * 0.01,
+                          ),
+                          child: GridTile(
+                              child: Column(
+                            children: [
+                              SizedBox(
+                                height: h * 0.02,
+                              ),
+                              InkWell(
+                                child: SizedBox(
+                                  height: h * 0.2,
+                                  child: ClipRRect(
+                                    child: Image(
+                                      image:
+                                          NetworkImage(liist[index]['image']),
+                                      fit: BoxFit.cover,
+                                      height: h * 0.3,
+                                      width: w * 0.88,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ));
+                            ],
+                          )),
+                        );
                       }));
                 })),
           )),

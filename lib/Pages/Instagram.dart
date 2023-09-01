@@ -77,8 +77,8 @@ class GridoState extends State<Grido> {
                             padding: EdgeInsets.only(
                                 bottom: h * 0.04, top: h * 0.02),
                             child: Container(
-                              height: h * 0.3,
-                              width: w * 0.8,
+                              height: h * 0.35,
+                              width: w * 0.9,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(h * 0.06),
                                   gradient: const LinearGradient(
@@ -103,27 +103,30 @@ class GridoState extends State<Grido> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Row(
-                                  children: [
-                                    Consumer<Like>(
-                                        builder: ((context, value, child) {
-                                      return IconButton(
-                                          onPressed: () {
-                                            value.setlike(index);
-                                          },
-                                          icon: Icon(value.Idexx.contains(index)
-                                              ? CupertinoIcons.snow
-                                              : CupertinoIcons.heart));
-                                    })),
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(CupertinoIcons
-                                            .bubble_left_bubble_right_fill)),
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                            CupertinoIcons.right_chevron)),
-                                  ],
+                                Consumer<Like>(
+                                  builder: (context, value, child) {
+                                    return Row(
+                                      children: [
+                                        IconButton(
+                                            onPressed: () {
+                                              value.addlike(index);
+                                              value.Idexx.add(index);
+                                            },
+                                            icon: Icon(
+                                                value.Idexx.contains(index)
+                                                    ? CupertinoIcons.snow
+                                                    : CupertinoIcons.heart)),
+                                        IconButton(
+                                            onPressed: () {},
+                                            icon: const Icon(CupertinoIcons
+                                                .bubble_left_bubble_right_fill)),
+                                        IconButton(
+                                            onPressed: () {},
+                                            icon: const Icon(
+                                                CupertinoIcons.right_chevron)),
+                                      ],
+                                    );
+                                  },
                                 ),
                                 IconButton(
                                     onPressed: () {},

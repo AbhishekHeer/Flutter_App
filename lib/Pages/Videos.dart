@@ -1,7 +1,5 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:todo_app/Postscreen/Videopost.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoScreen extends StatefulWidget {
@@ -24,14 +22,16 @@ class _VideoScreenState extends State<VideoScreen> {
       child: SafeArea(
         child: Stack(
           children: [
-            FirebaseAnimatedList(
-                query: _db,
-                itemBuilder: ((context, snapshot, animation, index) {
-                  VideoPlayerController sv =
-                      Videoplay(snapshot.child('Video').value.toString());
-                  return sv.value.hasError
-                      ? const Icon(Icons.add)
-                      : VideoPlayer(sv);
+            StreamBuilder(
+                stream: _db.onValue,
+                builder: ((context, snapshot) {
+                  final sc = Videoplay(
+                      snapshot.data!.snapshot.child('video').value.toString());
+                  return ListView(
+                    children: [
+                      VideoPlayer(sc),
+                    ],
+                  );
                 }))
           ],
         ),

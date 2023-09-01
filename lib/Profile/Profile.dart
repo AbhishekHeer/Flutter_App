@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/Profile/Profiel_image.dart';
 import 'package:todo_app/files/Auth/Login.dart';
 
-import 'Follow.dart';
 import 'Project_Add.dart';
 
 class Profile extends StatefulWidget {
@@ -16,7 +15,7 @@ class Profile extends StatefulWidget {
 // bottomnavi
 
 int index = 0;
-List Pages = [const ImageLoad(), const Follow(), const Project_Add()];
+List Pages = [const ImageLoad(), const Project_Add()];
 //db
 final _db = FirebaseDatabase.instance.ref('Sender');
 
@@ -77,7 +76,7 @@ class _ProfileState extends State<Profile> {
             Padding(
               padding: EdgeInsets.only(left: h * 0.01),
               child: Align(
-                alignment: Alignment.topLeft,
+                alignment: Alignment.center,
                 child: Text(
                   'UserName',
                   style: TextStyle(
@@ -106,9 +105,6 @@ class _ProfileState extends State<Profile> {
                   NavigationDestination(
                       icon: Icon(CupertinoIcons.circle_grid_hex),
                       label: 'Post'),
-                  NavigationDestination(
-                      icon: Icon(CupertinoIcons.person_2_fill),
-                      label: 'Folower'),
                   NavigationDestination(
                       icon: Icon(CupertinoIcons.add), label: 'Add Project'),
                 ]),

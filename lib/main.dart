@@ -7,6 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/Pages/BottomNavi.dart';
 import 'package:todo_app/Provider/Like.dart';
+import 'package:todo_app/UserDetails/details.dart';
 import 'package:todo_app/files/Auth/Login.dart';
 import 'firebase_options.dart';
 
@@ -15,6 +16,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
@@ -23,25 +25,35 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // themeMode: ThemeMode.system,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(color: Colors.transparent),
-        iconTheme: const IconThemeData(color: Color.fromARGB(255, 0, 0, 0)),
-        scaffoldBackgroundColor: const Color.fromARGB(251, 212, 218, 217),
-        iconButtonTheme: const IconButtonThemeData(
-            style: ButtonStyle(
-                iconColor:
-                    MaterialStatePropertyAll(Color.fromARGB(255, 0, 0, 0)))),
-        navigationBarTheme: const NavigationBarThemeData(
-            backgroundColor: Color.fromARGB(255, 0, 0, 0),
-            indicatorColor: Color.fromARGB(255, 255, 255, 255)),
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 153, 150, 158)),
-        useMaterial3: true,
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => Like()),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(
+            elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ButtonStyle(
+          shape: const MaterialStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
+          side: MaterialStatePropertyAll(BorderSide(
+              style: BorderStyle.solid,
+              color: Colors.black,
+              width: w * 0.0004)),
+          padding: MaterialStatePropertyAll(
+            EdgeInsets.symmetric(horizontal: h * 0.03, vertical: h * 0.02),
+          ),
+          minimumSize: MaterialStatePropertyAll(Size.square(h * 0.04)),
+          foregroundColor: const MaterialStatePropertyAll(
+            Colors.black,
+          ),
+          backgroundColor: const MaterialStatePropertyAll(
+              Color.fromARGB(151, 184, 174, 174)),
+        ))),
+        debugShowCheckedModeBanner: false,
+        home: const Details(),
       ),
-      home: Provider(create: (_) => Like(), child: const BottomNavi()),
     );
   }
 }
